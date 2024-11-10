@@ -1,0 +1,51 @@
+/* styles/globals.css */
+
+/* Tailwind CSS setup */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #white;  /* Light Beige Color */
+}
+
+/* Custom fonts for headers */
+h1, h2, h3 {
+  font-family: 'Helvetica', sans-serif;
+}
+
+/* Button hover effect */
+button {
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #f1c40f;
+}
+
+/* Font Awesome overrides */
+svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Separator between main content and footer */
+.separator {
+  height: 2px;
+  background-color: #e0e0e0; /* Light grey color */
+  margin: 40px 0; /* Spacing around the separator */
+  width: 80%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 2px;
+}
+
+
