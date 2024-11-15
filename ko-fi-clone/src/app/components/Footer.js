@@ -4,10 +4,10 @@ import { faInstagram, faYoutube, faTwitter } from '@fortawesome/free-brands-svg-
 export default function Footer() {
   return (
     <footer className="bg-white text-gray-700 py-10">
-      <div className="container mx-auto px-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-5 flex flex-col items-center">
+        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-8 "> */}
           {/* Features Section */}
-          <div>
+          {/* <div>
             <h4 className="font-bold mb-4">Features</h4>
             <ul className="space-y-2">
               <li>Donations</li>
@@ -18,10 +18,10 @@ export default function Footer() {
               <li>Pricing</li>
               <li>Patreon alternative</li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Use Ko-fi with Section */}
-          <div>
+          {/* <div>
             <h4 className="font-bold mb-4">Use Ko-fi with</h4>
             <ul className="space-y-2">
               <li>Instagram</li>
@@ -34,10 +34,10 @@ export default function Footer() {
               <li>GitHub</li>
               <li>Discord</li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Help & Support Section */}
-          <div>
+          {/* <div>
             <h4 className="font-bold mb-4">Help & Support</h4>
             <ul className="space-y-2">
               <li>Brand assets</li>
@@ -46,10 +46,10 @@ export default function Footer() {
               <li>WordPress plugin</li>
               <li>Creator academy</li>
             </ul>
-          </div>
+          </div> */}
 
           {/* About Ko-fi Section */}
-          <div>
+          {/* <div>
             <h4 className="font-bold mb-4">About Ko-fi</h4>
             <ul className="space-y-2">
               <li>Our story</li>
@@ -60,7 +60,7 @@ export default function Footer() {
               <li>Copyright policy</li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* Social Media Icons */}
         <div className="flex justify-center mt-8 space-x-6">
@@ -74,6 +74,9 @@ export default function Footer() {
             <FontAwesomeIcon icon={faTwitter} className="text-gray-700 text-2xl hover:text-gray-900" />
           </a>
         </div>
+        <p className="text-sm mt-10">
+          © 2024 Your Company. All rights reserved.
+        </p>
       </div>
     </footer>
   );

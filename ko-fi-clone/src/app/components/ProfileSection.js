@@ -5,7 +5,7 @@ export default function ProfileSection() {
         <section className="bg-beige mt-20 py-12 px-6 text-center">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-4xl font-bold text-gray-800 mb-6">
-                    Love what you do and make money too
+                    Buy me a Beer
                 </h1>
                 <p className="text-xl text-gray-700 mb-6">
                     Join 1M+ creators getting donations, memberships, and sales from fans!
