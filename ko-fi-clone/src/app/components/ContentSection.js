@@ -14,8 +14,8 @@ export default function HowItWorksSection() {
           {/* Step 1 */}
           <div className="flex flex-col sm:flex-row mb-12">
             <div className="sm:w-1/3 mb-8 sm:mb-0">
-              <div className="w-20 h-20 mx-auto bg-blue-500 text-white rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold">1</span>
+              <div className="w-20 h-20 mx-auto bg-yellow-500 text-white rounded-full flex items-center justify-center">
+                <span className="text-2xl text-black font-bold">1</span>
               </div>
               <h3 className="text-2xl font-semibold text-gray-800 mt-4">
                 Discover Creators
@@ -27,8 +27,8 @@ export default function HowItWorksSection() {
   
             {/* Step 2 */}
             <div className="sm:w-1/3 mb-8 sm:mb-0">
-              <div className="w-20 h-20 mx-auto bg-green-500 text-white rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold">2</span>
+              <div className="w-20 h-20 mx-auto bg-yellow-500 text-white rounded-full flex items-center justify-center">
+                <span className="text-2xl text-black font-bold">2</span>
               </div>
               <h3 className="text-2xl font-semibold text-gray-800 mt-4">
                 Support Creators
@@ -41,7 +41,7 @@ export default function HowItWorksSection() {
             {/* Step 3 */}
             <div className="sm:w-1/3">
               <div className="w-20 h-20 mx-auto bg-yellow-500 text-white rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold">3</span>
+                <span className="text-2xl text-black font-bold">3</span>
               </div>
               <h3 className="text-2xl font-semibold text-gray-800 mt-4">
                 Enjoy Rewards

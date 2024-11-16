@@ -1,4 +1,5 @@
 /* styles/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@500&family=Splash&display=swap');
 
 /* Tailwind CSS setup */
 @tailwind base;
@@ -7,7 +8,7 @@
 
 /* Custom global styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #white;  /* Light Beige Color */
 }
 
