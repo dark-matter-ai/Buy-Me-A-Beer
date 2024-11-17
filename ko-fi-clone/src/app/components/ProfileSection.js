@@ -30,9 +30,9 @@ export default function ProfileSection() {
           </div>
 
           {/* GIF Section */}
-          <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+          <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center hover:scale-95 active:scale-90 transition duration-300">
             <img
-              src="https://th.bing.com/th/id/OIP.4mmvYFdDmGSp9cXFO_FyGAHaEo?w=269&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+              src="https://i.pinimg.com/736x/79/6b/38/796b3813554942e9b87ed586fb822c76.jpg"
               alt="Beer Overflowing"
               className="w-full max-w-md"
             />

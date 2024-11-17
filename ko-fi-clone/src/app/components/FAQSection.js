@@ -4,34 +4,34 @@ import { useState } from "react";
 
 const faqData = [
   {
-    question: "What is Ko-fi?",
+    question: "What is Buy me a Beer?",
     answer:
-      "Ko-fi is a platform that allows creators to receive donations, sell products, and offer memberships to their supporters.",
+      "Buy me a Beer is a platform that allows creators to receive donations, sell products, and offer memberships to their supporters.",
   },
   {
-    question: "How does Ko-fi work?",
+    question: "How does Buy me a Beer work?",
     answer:
-      "Ko-fi lets fans support their favorite creators by sending tips or buying items. Creators can also set up membership tiers for more consistent support.",
+      "Buy me a Beer lets fans support their favorite creators by sending tips or buying items. Creators can also set up membership tiers for more consistent support.",
   },
   {
-    question: "Does Ko-fi take a fee?",
+    question: "Does Buy me a Beer take a fee?",
     answer:
-      "Ko-fi offers a free plan with zero platform fees on donations. For advanced features, there is a Ko-fi Gold subscription.",
+      "Buy me a Beer offers a free plan with zero platform fees on donations. For advanced features, there is a Buy me a Beer Gold subscription.",
   },
   {
-    question: "Can I use Ko-fi if I’m just starting out?",
+    question: "Can I use Buy me a Beer if I’m just starting out?",
     answer:
-      "Yes! Ko-fi is great for creators at any stage, whether you’re just beginning or already established.",
+      "Yes! Buy me a Beer is great for creators at any stage, whether you’re just beginning or already established.",
   },
   {
-    question: "How do I get paid on Ko-fi?",
+    question: "How do I get paid on Buy me a Beer?",
     answer:
-      "Ko-fi connects to PayPal and Stripe, allowing creators to receive funds directly without delays.",
+      "Buy me a Beer connects to Solana Blinks, allowing creators to receive funds directly without delays.",
   },
   {
-    question: "How is Ko-fi different from Patreon?",
+    question: "How is Buy me a Beer different from Patreon?",
     answer:
-      "Unlike Patreon, Ko-fi does not take a percentage of donations on the free plan. Ko-fi is also simpler for fans to make one-time donations.",
+      "Unlike Patreon, Buy me a Beer does not take a percentage of donations on the free plan. Buy me a Beer is also simpler for fans to make one-time donations.",
   },
 ];
 
@@ -52,21 +52,21 @@ export default function ContentSection() {
           {faqData.map((item, index) => (
             <div
               key={index}
-              className="border rounded-lg overflow-hidden shadow-lg transition-all duration-300"
+              className=" rounded-lg overflow-hidden transition-all duration-300"
             >
               <button
-                className={`w-full text-left text-lg font-semibold py-4 px-6 bg-gradient-to-r from-orange-500 to-yellow-500 text-white flex justify-between items-center transition-all duration-300 ${
+                className={`w-full text-left text-lg font-semibold py-4 px-6 bg-gradient-to-r from-orange-500 to-yellow-500 text-white flex justify-between items-center hover:text-black hover:scale-95 active:scale-90 transition-all duration-300 ${
                   activeIndex === index ? "rounded-t-lg" : "rounded-lg"
                 }`}
                 onClick={() => toggleFAQ(index)}
               >
                 <span className="hover:text-black">{item.question}</span>
-                <span className="text-2xl">
+                <span className="text-2xl hover:text-black">
                   {activeIndex === index ? "−" : "+"}
                 </span>
               </button>
               {activeIndex === index && (
-                <div className="bg-gray-100 p-6 text-gray-800 text-sm">
+                <div className="bg-gray-100 p-6 text-gray-800 hover:scale-95 active:scale-90 transition-all duration-300 text-sm">
                   <p>{item.answer}</p>
                 </div>
               )}
