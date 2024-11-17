@@ -19,7 +19,7 @@ export default function Header() {
         {/* Navigation Links */}
         <nav className="flex items-center space-x-6">
           <Link
-            href="#how-it-works"
+            href="/#how-it-works"
             className="text-black font-bold hover:text-gray-900"
           >
             How it Works
