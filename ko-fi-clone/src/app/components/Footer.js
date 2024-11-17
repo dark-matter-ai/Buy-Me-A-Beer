@@ -1,13 +1,17 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram, faYoutube, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInstagram,
+  faYoutube,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
   return (
     <footer className="bg-white text-gray-700 py-10">
       <div className="container mx-auto px-5 flex flex-col items-center">
         {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-8 "> */}
-          {/* Features Section */}
-          {/* <div>
+        {/* Features Section */}
+        {/* <div>
             <h4 className="font-bold mb-4">Features</h4>
             <ul className="space-y-2">
               <li>Donations</li>
@@ -20,8 +24,8 @@ export default function Footer() {
             </ul>
           </div> */}
 
-          {/* Use Ko-fi with Section */}
-          {/* <div>
+        {/* Use Ko-fi with Section */}
+        {/* <div>
             <h4 className="font-bold mb-4">Use Ko-fi with</h4>
             <ul className="space-y-2">
               <li>Instagram</li>
@@ -36,8 +40,8 @@ export default function Footer() {
             </ul>
           </div> */}
 
-          {/* Help & Support Section */}
-          {/* <div>
+        {/* Help & Support Section */}
+        {/* <div>
             <h4 className="font-bold mb-4">Help & Support</h4>
             <ul className="space-y-2">
               <li>Brand assets</li>
@@ -48,8 +52,8 @@ export default function Footer() {
             </ul>
           </div> */}
 
-          {/* About Ko-fi Section */}
-          {/* <div>
+        {/* About Ko-fi Section */}
+        {/* <div>
             <h4 className="font-bold mb-4">About Ko-fi</h4>
             <ul className="space-y-2">
               <li>Our story</li>
@@ -64,14 +68,38 @@ export default function Footer() {
 
         {/* Social Media Icons */}
         <div className="flex justify-center mt-8 space-x-6">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <FontAwesomeIcon icon={faInstagram} className="text-gray-700 text-2xl hover:text-gray-900" />
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <FontAwesomeIcon
+              icon={faInstagram}
+              className="text-gray-700 text-2xl hover:text-gray-900"
+            />
           </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <FontAwesomeIcon icon={faYoutube} className="text-gray-700 text-2xl hover:text-gray-900" />
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+          >
+            <FontAwesomeIcon
+              icon={faYoutube}
+              className="text-gray-700 text-2xl hover:text-gray-900"
+            />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <FontAwesomeIcon icon={faTwitter} className="text-gray-700 text-2xl hover:text-gray-900" />
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Twitter"
+          >
+            <FontAwesomeIcon
+              icon={faTwitter}
+              className="text-gray-700 text-2xl hover:text-gray-900"
+            />
           </a>
         </div>
         <p className="text-sm mt-10">

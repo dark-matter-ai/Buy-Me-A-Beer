@@ -1,8 +1,8 @@
 // app/page.js
 
-import ProfileSection from './components/ProfileSection';
-import ContentSection from './components/ContentSection';
-import FAQSection from './components/FAQSection';
+import ProfileSection from "./components/ProfileSection";
+import ContentSection from "./components/ContentSection";
+import FAQSection from "./components/FAQSection";
 
 export default function Home() {
   return (
@@ -10,7 +10,6 @@ export default function Home() {
       <ProfileSection />
       <ContentSection />
       <FAQSection />
-      
     </div>
   );
 }
