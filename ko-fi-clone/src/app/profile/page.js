@@ -9,13 +9,14 @@ export default function ProfilePage() {
         <Header />
         <div className="min-h-screen bg-gray-100">
           {/* Banner */}
-          <div className="h-80 bg-gray-300 flex flex-col items-center justify-start overflow-hidden">
+          <div className="h-80 bg-gray-300 flex flex-col items-center justify-start overflow-hidden relative">
             <img
               src="https://images.unsplash.com/photo-1668613966303-1a993a22e93f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Banner"
               className="w-full object-cover"
               style={{ height: "170%" }} // Adjust height to control how much space the image occupies
             />
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
           </div>
 
           {/* Profile Content */}
@@ -41,18 +42,18 @@ export default function ProfilePage() {
             <div className="bg-black text-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-4">Recent Posts</h3>
               <div className="flex items-center mb-4">
-                <div className="w-8 h-8 rounded-full bg-gray-600 mr-4"></div>
+                <div className="w-10 h-10 rounded-full bg-gray-600 mr-3"></div> 
                 <div>
                   <p className="font-semibold">Charles Noble</p>
                   <p className="text-gray-400 text-sm">1 hour ago</p>
                 </div>
               </div>
-              <p className="bg-gray-700 p-4 rounded-md">I am gey</p>
+              <p className="bg-gray-700 p-4 rounded-md">I won the laurels award!</p>
             </div>
 
             {/* Recent Donations */}
             <div className="bg-black text-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-4">Recent Donations</h3>
+              <h3 className="text-xl font-bold mb-4">Recent Supporters</h3>
               <p className="mb-2">
                 Aarone donated 3 beers{" "}
                 <span className="text-gray-400">• 3 days ago</span>
