@@ -63,7 +63,7 @@ export default function Login() {
           <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
           {error && (
             <div className="mb-4 p-2 bg-red-100 text-red-600 rounded-lg text-sm">
-              {error}
+              {"Invalid credentials. Please verify and try again"}
             </div>
           )}
           <form className="space-y-4" onSubmit={handleSubmit}>

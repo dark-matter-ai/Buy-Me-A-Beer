@@ -59,7 +59,7 @@ export default function ForgotPasswordModal({ isOpen, onClose }) {
 
         {error && (
           <div className="mb-4 p-2 bg-red-100 text-red-600 rounded-lg text-sm">
-            {error}
+            {"Sorry, we couldn't reset your password"}
           </div>
         )}
 
