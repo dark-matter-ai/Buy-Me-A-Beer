@@ -103,7 +103,7 @@ export default function Footer() {
           </a>
         </div>
         <p className="text-sm mt-10">
-          © 2024 Your Company. All rights reserved.
+          © 2024 Buy Me A Beer. All rights reserved.
         </p>
       </div>
     </footer>

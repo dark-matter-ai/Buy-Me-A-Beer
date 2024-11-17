@@ -38,14 +38,14 @@ export default function Signup() {
     }
 
     if (user) {
-      router.push("/about");
+      router.push("/profile");
     }
     setLoading(false);
   };
 
   useEffect(() => {
     if (user) {
-      router.push("/about");
+      router.push("/profile");
     }
   }, [user, router]);
 
@@ -92,7 +92,7 @@ export default function Signup() {
     }
 
     if (user) {
-      router.push("/about");
+      router.push("/profile");
     }
     setLoading(false);
   };

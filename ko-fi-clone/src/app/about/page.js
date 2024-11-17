@@ -1,12 +1,11 @@
 // src/app/about/page.js
 "use client";
 
-import ProtectedRoute from "../components/ProtectedRoute";
 import Header from "../components/Header";
 
 export default function About() {
   return (
-    <ProtectedRoute>
+    <>
       <Header />
       <div className="min-h-screen pt-20 px-4">
         <div className="max-w-4xl mx-auto">
@@ -16,6 +15,6 @@ export default function About() {
           </p>
         </div>
       </div>
-    </ProtectedRoute>
+    </>
   );
 }

@@ -8,12 +8,12 @@ export function middleware(request) {
   const token = request.cookies.get("authToken");
 
   if (isAuthPage && token) {
-    return NextResponse.redirect(new URL("/about", request.url));
+    return NextResponse.redirect(new URL("/profile", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/about/:path*"],
+  matcher: ["/login", "/signup", "/profile/:path*"],
 };
