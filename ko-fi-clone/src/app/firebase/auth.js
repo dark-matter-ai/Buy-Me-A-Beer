@@ -2,10 +2,15 @@
 import { auth } from "./config";
 import {
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendEmailVerification,
 } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 export const validatePassword = (password) => {
   const minLength = password.length >= 6;
@@ -24,6 +29,7 @@ export const signUp = async (email, password) => {
       email,
       password
     );
+    await sendEmailVerification(userCredential.user);
     return { user: userCredential.user, error: null };
   } catch (error) {
     return { user: null, error: error.message };
@@ -55,6 +61,24 @@ export const logOut = async () => {
 export const resetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
+    return { error: null };
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return { user: result.user, error: null };
+  } catch (error) {
+    return { user: null, error: error.message };
+  }
+};
+
+export const resendVerificationEmail = async (user) => {
+  try {
+    await sendEmailVerification(user);
     return { error: null };
   } catch (error) {
     return { error: error.message };

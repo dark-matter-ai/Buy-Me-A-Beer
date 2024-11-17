@@ -4,8 +4,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
+import EmailVerificationNotice from "./EmailVerificationNotice";
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute({
+  children,
+  requireVerification = true,
+}) {
   const { user } = useAuth();
   const router = useRouter();
 
@@ -15,5 +19,12 @@ export default function ProtectedRoute({ children }) {
     }
   }, [user, router]);
 
-  return user ? children : null;
+  if (!user) return null;
+
+  return (
+    <>
+      {children}
+      {requireVerification && <EmailVerificationNotice user={user} />}
+    </>
+  );
 }
