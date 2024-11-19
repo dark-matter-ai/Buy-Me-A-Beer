@@ -12,7 +12,7 @@ import {
 export async function GET(request) {
   try {
     const reqBody = {
-      icon: new URL("/blue_girl.gif", new URL(request.url).origin).toString(),
+      icon: new URL("https://ryuzen6.github.io/assets/img/profile-img.jpg", new URL(request.url).origin).toString(),
       description: "Buy Charles a beer with SOL using the power of Blinks!",
       title: "BUY CHARLES A BEER",
       label: "Send Beer",

@@ -36,7 +36,7 @@ export default function ProfilePage() {
           <div className="absolute -top-16 left-8 z-20">
             <img
               className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-white border-4 border-white shadow-lg"
-              src="https://media.licdn.com/dms/image/v2/D5635AQGFVKpwgSsL3A/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1728403147030?e=1732456800&v=beta&t=U-IU2dNcTC9cr3J577Q2RiEAXGzdGhGjChGf2b500rI"
+              src="https://ryuzen6.github.io/assets/img/profile-img.jpg"
               alt="profile"
             />
           </div>
@@ -74,7 +74,7 @@ export default function ProfilePage() {
               <h3 className="text-xl font-bold mb-4">Recent Posts</h3>
               <div className="flex items-center mb-4">
                 <img
-                  src="https://media.licdn.com/dms/image/v2/D5635AQGFVKpwgSsL3A/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1728403147030?e=1732456800&v=beta&t=U-IU2dNcTC9cr3J577Q2RiEAXGzdGhGjChGf2b500rI"
+                  src="https://ryuzen6.github.io/assets/img/profile-img.jpg"
                   alt="profile pic"
                   className="w-10 h-10 rounded-full bg-gray-600 mr-3"
                 />
