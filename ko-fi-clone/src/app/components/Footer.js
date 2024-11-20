@@ -1,110 +1,87 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInstagram,
-  faYoutube,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+"use client";
 
-export default function Footer() {
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
+import Link from "next/link";
+
+export default function Component() {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
+
   return (
-    <footer className="bg-white text-gray-700 py-10">
-      <div className="container mx-auto px-5 flex flex-col items-center">
-        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-8 "> */}
-        {/* Features Section */}
-        {/* <div>
-            <h4 className="font-bold mb-4">Features</h4>
-            <ul className="space-y-2">
-              <li>Donations</li>
-              <li>Memberships</li>
-              <li>Ko-fi Shop</li>
-              <li>Ko-fi Commissions</li>
-              <li>Stream Alerts</li>
-              <li>Pricing</li>
-              <li>Patreon alternative</li>
-            </ul>
-          </div> */}
-
-        {/* Use Ko-fi with Section */}
-        {/* <div>
-            <h4 className="font-bold mb-4">Use Ko-fi with</h4>
-            <ul className="space-y-2">
-              <li>Instagram</li>
-              <li>YouTube</li>
-              <li>TikTok</li>
-              <li>Twitch</li>
-              <li>X/Twitter</li>
-              <li>Medium</li>
-              <li>Facebook</li>
-              <li>GitHub</li>
-              <li>Discord</li>
-            </ul>
-          </div> */}
-
-        {/* Help & Support Section */}
-        {/* <div>
-            <h4 className="font-bold mb-4">Help & Support</h4>
-            <ul className="space-y-2">
-              <li>Brand assets</li>
-              <li>Ko-fi blog</li>
-              <li>Help</li>
-              <li>WordPress plugin</li>
-              <li>Creator academy</li>
-            </ul>
-          </div> */}
-
-        {/* About Ko-fi Section */}
-        {/* <div>
-            <h4 className="font-bold mb-4">About Ko-fi</h4>
-            <ul className="space-y-2">
-              <li>Our story</li>
-              <li>We're hiring!</li>
-              <li>Cookie settings</li>
-              <li>Terms</li>
-              <li>Privacy</li>
-              <li>Copyright policy</li>
-            </ul>
+    <footer className="min-h-screen w-full bg-white flex flex-col justify-between pt-32 px-4 md:px-8">
+      <div className="container mx-auto">
+        <div className="flex flex-wrap justify-between items-start">
+          <div className="w-full md:w-auto flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-16 mb-8 md:mb-0">
+            <div>
+              <h2 className="text-lg font-semibold mb-4">Community</h2>
+              <nav className="flex flex-col space-y-2 text-gray-500">
+                <Link className="hover:text-gray-700" href="#">
+                  Blog
+                </Link>
+                <Link className="hover:text-gray-700" href="#">
+                  Support
+                </Link>
+              </nav>
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold mb-4">Company</h2>
+              <nav className="flex flex-col space-y-2 text-gray-500">
+                <Link className="hover:text-gray-700" href="#">
+                  Terms of Use
+                </Link>
+                <Link className="hover:text-gray-700" href="#">
+                  Privacy Policy
+                </Link>
+                <Link className="hover:text-gray-700" href="#">
+                  Imprint
+                </Link>
+              </nav>
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold mb-4">Investors</h2>
+              <nav className="flex flex-col space-y-2 text-gray-500">
+                <Link className="hover:text-gray-700" href="#">
+                  Token
+                </Link>
+              </nav>
+            </div>
           </div>
-        </div> */}
-
-        {/* Social Media Icons */}
-        <div className="flex justify-center mt-8 space-x-6">
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <FontAwesomeIcon
-              icon={faInstagram}
-              className="text-gray-700 text-2xl hover:text-gray-900"
-            />
-          </a>
-          <a
-            href="https://youtube.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube"
-          >
-            <FontAwesomeIcon
-              icon={faYoutube}
-              className="text-gray-700 text-2xl hover:text-gray-900"
-            />
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Twitter"
-          >
-            <FontAwesomeIcon
-              icon={faTwitter}
-              className="text-gray-700 text-2xl hover:text-gray-900"
-            />
-          </a>
+          <div className="w-full md:w-auto flex space-x-10 justify-start md:justify-end">
+            <Link className="text-gray-500 hover:text-gray-700" href="#">
+              <Twitter className="h-12 w-12" />
+              <span className="sr-only">Twitter</span>
+            </Link>
+            <Link className="text-gray-500 hover:text-gray-700" href="#">
+              <Linkedin className="h-12 w-12" />
+              <span className="sr-only">LinkedIn</span>
+            </Link>
+            <Link className="text-gray-500 hover:text-gray-700" href="#">
+              <Facebook className="h-12 w-12" />
+              <span className="sr-only">Facebook</span>
+            </Link>
+            <Link className="text-gray-500 hover:text-gray-700" href="#">
+              <Youtube className="h-12 w-12" />
+              <span className="sr-only">YouTube</span>
+            </Link>
+          </div>
         </div>
-        <p className="text-sm mt-10">
-          © 2024 Buy Me A Beer. All rights reserved.
-        </p>
+      </div>
+      <div className="flex-grow flex items-center justify-center">
+        <motion.div
+          style={{ y }}
+          className="text-center text-[120px] font-bold leading-none tracking-tighter md:text-[200px]"
+        >
+          Buy Me A Beer
+        </motion.div>
+      </div>
+      <div className="container mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 py-8 text-sm text-gray-500">
+          <p>BuyMeABeer 2024©. ALL RIGHTS RESERVED.</p>
+          <p className="flex items-center">
+            Made with <span className="mx-2">♥</span> in India
+          </p>
+        </div>
       </div>
     </footer>
   );

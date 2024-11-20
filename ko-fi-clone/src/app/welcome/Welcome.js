@@ -11,7 +11,6 @@ export default function Home() {
       <ProfileSection />
       <ContentSection />
       <FAQSection />
-      <div className="separator"></div>
       <Footer />
     </>
   );

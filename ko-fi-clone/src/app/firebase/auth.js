@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   sendEmailVerification,
 } from "firebase/auth";
+import { createUserDocument } from "./store";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -22,7 +23,7 @@ export const validatePassword = (password) => {
   return minLength && hasNumber && hasSpecial && hasUpper && hasLower;
 };
 
-export const signUp = async (email, password) => {
+export const signUp = async (email, password, displayName) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -30,9 +31,20 @@ export const signUp = async (email, password) => {
       password
     );
     await sendEmailVerification(userCredential.user);
-    return { user: userCredential.user, error: null };
+
+    // Create user document in Firestore
+    const { userid, error: storeError } = await createUserDocument(
+      email,
+      displayName
+    );
+
+    if (storeError) {
+      throw new Error(storeError);
+    }
+
+    return { user: userCredential.user, userid, error: null };
   } catch (error) {
-    return { user: null, error: error.message };
+    return { user: null, userid: null, error: error.message };
   }
 };
 

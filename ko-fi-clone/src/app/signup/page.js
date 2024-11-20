@@ -78,12 +78,11 @@ export default function Signup() {
       return;
     }
 
-    setLoading(true);
-
-    const { user, error: signupError } = await signUp(
-      formData.email,
-      formData.password
-    );
+    const {
+      user,
+      userid,
+      error: signupError,
+    } = await signUp(formData.email, formData.password, formData.displayName);
 
     if (signupError) {
       setError(signupError);
@@ -91,8 +90,8 @@ export default function Signup() {
       return;
     }
 
-    if (user) {
-      router.push("/profile");
+    if (user && userid) {
+      router.push(`/profile/${userid}`);
     }
     setLoading(false);
   };
