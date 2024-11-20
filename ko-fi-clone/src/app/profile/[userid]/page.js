@@ -73,8 +73,15 @@ export default function ProfilePage() {
                 </div>
               </div>
               <div className="ml-auto flex items-center gap-3">
-                <button className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white rounded-full">
-                  Support
+                <button className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/931/931949.png"
+                    alt="Beer"
+                    width={20}
+                    height={20}
+                    className="filter brightness-0 invert"
+                  />
+                  <span>Support</span>
                 </button>
                 <button className="p-2 bg-white/50 backdrop-blur-sm rounded-full hover:bg-white/70 transition-colors">
                   <MoreHorizontal className="w-5 h-5 text-gray-800" />
