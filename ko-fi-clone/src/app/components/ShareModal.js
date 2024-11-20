@@ -13,7 +13,7 @@ export default function ShareModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+      <div className="rounded-3xl bg-gradient-to-br from-pink-50 to-white max-w-md w-full p-6 relative">
         {/* Close button */}
         <button
           onClick={onClose}

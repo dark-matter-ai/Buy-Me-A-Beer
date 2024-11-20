@@ -1,15 +1,12 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Facebook, Linkedin, Youtube, Twitter } from "lucide-react";
 import Link from "next/link";
 
 export default function Component() {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
-
   return (
-    <footer className="min-h-screen w-full bg-white flex flex-col justify-between pt-32 px-4 md:px-8">
+    <footer className="min-h-screen w-full bg-white flex flex-col justify-between pt-24 px-4 md:px-8">
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-start">
           <div className="w-full md:w-auto flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-16 mb-8 md:mb-0">
@@ -69,8 +66,10 @@ export default function Component() {
       </div>
       <div className="flex-grow flex items-center justify-center">
         <motion.div
-          style={{ y }}
-          className="text-center text-[120px] font-bold leading-none tracking-tighter md:text-[200px]"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center text-[150px] font-bold leading-none tracking-tighter md:text-[210px]"
         >
           Buy Me A Beer
         </motion.div>
@@ -79,7 +78,15 @@ export default function Component() {
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 py-8 text-sm text-gray-500">
           <p>BuyMeABeer 2024©. ALL RIGHTS RESERVED.</p>
           <p className="flex items-center">
-            Made with <span className="mx-2">♥</span> in India
+            Made with <span className="mx-2">♥</span> from
+            <a
+              href="https://github.com/dark-matter-ai"
+              target="_blank"
+              rel="noopener noreferrer"  
+              className="ml-1 hover:animate-pulse focus:outline-none"
+            >
+              DarkMatter
+            </a>
           </p>
         </div>
       </div>
