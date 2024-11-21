@@ -1,23 +1,41 @@
+// src/app/components/EmailVerificationNotice.js
 "use client";
 
 import { useState, useEffect } from "react";
 import { resendVerificationEmail } from "../firebase/auth";
 import { useAuth } from "../context/AuthContext";
+import { getUserDataByEmail } from "../firebase/store";
 
-export default function EmailVerificationNotice() {
+export default function EmailVerificationNotice({ currentProfileUserid }) {
   const [resendLoading, setResendLoading] = useState(false);
   const [resendStatus, setResendStatus] = useState("");
   const [showNotice, setShowNotice] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
-    // Check if we should show the notice
-    if (user && !user.emailVerified) {
-      setShowNotice(true);
-    } else {
-      setShowNotice(false);
-    }
-  }, [user]);
+    const checkVerificationStatus = async () => {
+      // Don't show if no user is logged in
+      if (!user) {
+        setShowNotice(false);
+        return;
+      }
+
+      // Get the logged-in user's profile data
+      const { userData } = await getUserDataByEmail(user.email);
+
+      // Only show notification if:
+      // 1. User is not verified
+      // 2. User is viewing their own profile
+      // 3. We have their userData
+      if (!user.emailVerified && userData?.userid === currentProfileUserid) {
+        setShowNotice(true);
+      } else {
+        setShowNotice(false);
+      }
+    };
+
+    checkVerificationStatus();
+  }, [user, currentProfileUserid]);
 
   const handleResendEmail = async () => {
     if (!user) return;
@@ -39,7 +57,7 @@ export default function EmailVerificationNotice() {
   if (!showNotice) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200">
+    <div className="fixed top-20 right-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200 z-50">
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <svg
