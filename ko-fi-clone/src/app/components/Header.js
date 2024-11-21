@@ -47,6 +47,13 @@ export default function Header() {
         </div>
 
         <nav className="flex items-center space-x-6">
+          {/* <Link
+            href="/explore"
+            className="text-black font-bold hover:text-gray-900"
+          >
+            Explore
+          </Link> */}
+
           <Link
             href="/#how-it-works"
             className="text-black font-bold hover:text-gray-900"

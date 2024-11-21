@@ -57,7 +57,7 @@ export default function EmailVerificationNotice({ currentProfileUserid }) {
   if (!showNotice) return null;
 
   return (
-    <div className="fixed top-20 right-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200 z-50">
+    <div className="fixed bottom-10 left-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200 z-50">
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <svg

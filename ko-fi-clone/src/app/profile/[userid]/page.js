@@ -95,7 +95,15 @@ export default function ProfilePage() {
                 </div>
               </div>
               <div className="ml-auto flex items-center gap-3">
-                <button className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2">
+                <button
+                  className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
+                  onClick={() =>
+                    window.open(
+                      "https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2Fdonate&cluster=devnet",
+                      "_blank"
+                    )
+                  }
+                >
                   <img
                     src="https://cdn-icons-png.flaticon.com/128/931/931949.png"
                     alt="Beer"
@@ -105,6 +113,7 @@ export default function ProfilePage() {
                   />
                   <span>Support</span>
                 </button>
+
                 {isCurrentUser && (
                   <Menu as="div" className="relative">
                     <Menu.Button className="p-2 bg-white/50 backdrop-blur-sm rounded-full hover:bg-white/70 transition-colors">
