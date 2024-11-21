@@ -26,13 +26,30 @@ export const createUserDocument = async (email, displayName) => {
     const userid = generateUserId(displayName);
     const userRef = doc(db, "users", userid);
 
-    await setDoc(userRef, {
+    const defaultUserData = {
       userid,
       name: displayName,
       email,
       createdAt: new Date().toISOString(),
-    });
+      bannerImage:
+        "https://images.unsplash.com/photo-1668613966303-1a993a22e93f",
+      profileImage: "https://ryuzen6.github.io/assets/img/profile-img.jpg",
+      superPower: "New Creator",
+      about: `${displayName} is a new creator. Welcome to their page!`,
+      portfolioUrl: "",
+      socialMedia: {
+        instagram: "",
+        twitter: "",
+        youtube: "",
+        twitch: "",
+        music: "",
+      },
+      categories: [],
+      posts: [],
+      supporters: [],
+    };
 
+    await setDoc(userRef, defaultUserData);
     return { userid, error: null };
   } catch (error) {
     console.error("Error creating user document:", error);

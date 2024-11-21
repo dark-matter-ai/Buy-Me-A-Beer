@@ -4,11 +4,27 @@
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { logOut } from "../firebase/auth";
+import { getUserDataByEmail } from "../firebase/store";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { user } = useAuth();
   const router = useRouter();
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user) {
+        const { userData } = await getUserDataByEmail(user.email);
+        if (userData?.userid) {
+          setUserProfile(userData);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   const handleSignOut = async () => {
     const { error } = await logOut();
@@ -53,12 +69,22 @@ export default function Header() {
               </Link>
             </>
           ) : (
-            <button
-              onClick={handleSignOut}
-              className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-gray-800 transition duration-300"
-            >
-              Sign out
-            </button>
+            <>
+              {userProfile && (
+                <Link
+                  href={`/profile/${userProfile.userid}`}
+                  className="text-black font-bold hover:text-gray-900"
+                >
+                  My Profile
+                </Link>
+              )}
+              <button
+                onClick={handleSignOut}
+                className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-gray-800 transition duration-300"
+              >
+                Sign out
+              </button>
+            </>
           )}
         </nav>
       </div>

@@ -1,10 +1,26 @@
 "use client";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import { getUserDataByEmail } from "../firebase/store";
+import { useState, useEffect } from "react";
 
 export default function ProfileSection() {
   const { user } = useAuth();
-  const redLink = !user ? "/login" : "/profile";
+  const [profileLink, setProfileLink] = useState("/login");
+
+  useEffect(() => {
+    const getProfileLink = async () => {
+      if (user) {
+        const { userData } = await getUserDataByEmail(user.email);
+        if (userData?.userid) {
+          setProfileLink(`/profile/${userData.userid}`);
+        }
+      }
+    };
+
+    getProfileLink();
+  }, [user]);
+
   return (
     <>
       <section className="bg-beige mt-20 py-12 px-6 min-h-[70vh] flex items-center">
@@ -19,7 +35,7 @@ export default function ProfileSection() {
               fans!
             </p>
             <Link
-              href={redLink}
+              href={profileLink}
               className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-lg font-semibold py-3 px-8 rounded-lg hover:bg-gradient-to-r from-orange-500 to-yellow-500 hover:text-gray-800 hover:scale-95 active:scale-90 transition duration-300"
             >
               Get Started

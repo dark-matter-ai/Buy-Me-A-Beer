@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import { signUp, signInWithGoogle } from "../firebase/auth";
 import { validatePassword } from "../firebase/auth";
 import { useAuth } from "../context/AuthContext";
+import { getUserDataByEmail } from "../firebase/store";
 
 export default function Signup() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -29,7 +30,9 @@ export default function Signup() {
     setLoading(true);
     setError("");
 
-    const { user, error: googleError } = await signInWithGoogle();
+    const { user, userid, error: googleError } = await signInWithGoogle();
+
+    console.log(error);
 
     if (googleError) {
       setError(googleError);
@@ -37,16 +40,24 @@ export default function Signup() {
       return;
     }
 
-    if (user) {
-      router.push("/profile");
+    if (user && userid) {
+      router.push(`/profile/${userid}`);
     }
     setLoading(false);
   };
 
+  // Update useEffect
   useEffect(() => {
-    if (user) {
-      router.push("/profile");
-    }
+    const checkUserAndRedirect = async () => {
+      if (user) {
+        const { userData } = await getUserDataByEmail(user.email);
+        if (userData?.userid) {
+          router.push(`/profile/${userData.userid}`);
+        }
+      }
+    };
+
+    checkUserAndRedirect();
   }, [user, router]);
 
   const handleSubmit = async (e) => {

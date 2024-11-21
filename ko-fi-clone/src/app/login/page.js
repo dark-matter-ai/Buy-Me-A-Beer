@@ -8,6 +8,7 @@ import ForgotPasswordModal from "./forgotpassword";
 import Header from "../components/Header";
 import { logIn, signInWithGoogle } from "../firebase/auth";
 import { useAuth } from "../context/AuthContext";
+import { getUserDataByEmail } from "../firebase/store";
 
 export default function Login() {
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
@@ -21,30 +22,6 @@ export default function Login() {
 
   const router = useRouter();
   const { user } = useAuth();
-
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    setError("");
-
-    const { user, error: googleError } = await signInWithGoogle();
-
-    if (googleError) {
-      setError(googleError);
-      setLoading(false);
-      return;
-    }
-
-    if (user) {
-      router.push("/profile");
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (user) {
-      router.push("/profile");
-    }
-  }, [user, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,10 +45,47 @@ export default function Login() {
     }
 
     if (user) {
-      router.push("/profile");
+      // Get user data and redirect to their profile page
+      const { userData } = await getUserDataByEmail(user.email);
+      if (userData?.userid) {
+        router.push(`/profile/${userData.userid}`);
+      }
     }
     setLoading(false);
   };
+
+  // Also update the Google Sign In handler in the same file
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError("");
+
+    const { user, userid, error: googleError } = await signInWithGoogle();
+
+    if (googleError) {
+      setError(googleError);
+      setLoading(false);
+      return;
+    }
+
+    if (user && userid) {
+      router.push(`/profile/${userid}`);
+    }
+    setLoading(false);
+  };
+
+  // Update useEffect
+  useEffect(() => {
+    const checkUserAndRedirect = async () => {
+      if (user) {
+        const { userData } = await getUserDataByEmail(user.email);
+        if (userData?.userid) {
+          router.push(`/profile/${userData.userid}`);
+        }
+      }
+    };
+
+    checkUserAndRedirect();
+  }, [user, router]);
 
   return (
     <>

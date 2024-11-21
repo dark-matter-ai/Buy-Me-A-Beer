@@ -1,4 +1,3 @@
-// src/middleware.js
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
@@ -8,12 +7,14 @@ export function middleware(request) {
   const token = request.cookies.get("authToken");
 
   if (isAuthPage && token) {
-    return NextResponse.redirect(new URL("/profile", request.url));
+    // Instead of redirecting to /profile, let the client-side handle the redirect
+    // since we need to fetch the userid from Firebase
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/profile", "/profile/:path*"],
+  matcher: ["/login", "/signup", "/profile/:path*"],
 };

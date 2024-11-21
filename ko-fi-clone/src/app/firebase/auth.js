@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   sendEmailVerification,
 } from "firebase/auth";
-import { createUserDocument } from "./store";
+import { createUserDocument, getUserDataByEmail } from "./store";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -30,7 +30,12 @@ export const signUp = async (email, password, displayName) => {
       email,
       password
     );
-    await sendEmailVerification(userCredential.user);
+
+    // Send verification email immediately after creating the account
+    await sendEmailVerification(userCredential.user, {
+      url: window.location.origin + "/login", // Redirect URL after verification
+      handleCodeInApp: true,
+    });
 
     // Create user document in Firestore
     const { userid, error: storeError } = await createUserDocument(
@@ -82,9 +87,30 @@ export const resetPassword = async (email) => {
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    return { user: result.user, error: null };
+    const user = result.user;
+
+    // Google accounts are already verified, but we can double-check
+    if (!user.emailVerified) {
+      throw new Error("Email verification required");
+    }
+
+    // Check if user exists in Firestore
+    const { userData } = await getUserDataByEmail(user.email);
+
+    if (!userData) {
+      // Create new user document if doesn't exist
+      const { userid, error: storeError } = await createUserDocument(
+        user.email,
+        user.displayName || "User"
+      );
+
+      if (storeError) throw new Error(storeError);
+      return { user, userid, error: null };
+    }
+
+    return { user, userid: userData.userid, error: null };
   } catch (error) {
-    return { user: null, error: error.message };
+    return { user: null, userid: null, error: error.message };
   }
 };
 
