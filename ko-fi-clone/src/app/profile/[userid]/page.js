@@ -21,6 +21,7 @@ import Header from "../../components/Header";
 import { getUserData } from "../../firebase/store";
 import { useAuth } from "../../context/AuthContext";
 import Link from "next/link";
+import EmailVerificationNotice from "../../components/EmailVerificationNotice";
 
 export default function ProfilePage() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -57,6 +58,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-white">
       <Header className="fixed top-0 left-0 right-0 z-50" />
+      <EmailVerificationNotice />
       <div className="pt-16">
         <div className="max-w-6xl mx-auto">
           {/* Banner Section */}

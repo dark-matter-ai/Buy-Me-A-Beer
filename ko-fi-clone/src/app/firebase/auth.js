@@ -31,9 +31,9 @@ export const signUp = async (email, password, displayName) => {
       password
     );
 
-    // Send verification email immediately after creating the account
+    // Ensure email verification is sent
     await sendEmailVerification(userCredential.user, {
-      url: window.location.origin + "/login", // Redirect URL after verification
+      url: window.location.origin + "/login",
       handleCodeInApp: true,
     });
 
@@ -49,6 +49,7 @@ export const signUp = async (email, password, displayName) => {
 
     return { user: userCredential.user, userid, error: null };
   } catch (error) {
+    console.error("Signup error:", error); // Add this for debugging
     return { user: null, userid: null, error: error.message };
   }
 };
@@ -116,9 +117,16 @@ export const signInWithGoogle = async () => {
 
 export const resendVerificationEmail = async (user) => {
   try {
-    await sendEmailVerification(user);
+    if (!user) throw new Error("No user found");
+
+    await sendEmailVerification(user, {
+      url: window.location.origin + "/login",
+      handleCodeInApp: true,
+    });
+
     return { error: null };
   } catch (error) {
+    console.error("Email verification error:", error); // Add this for debugging
     return { error: error.message };
   }
 };

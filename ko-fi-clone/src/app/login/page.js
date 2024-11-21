@@ -45,7 +45,12 @@ export default function Login() {
     }
 
     if (user) {
-      // Get user data and redirect to their profile page
+      if (!user.emailVerified) {
+        setError("Please verify your email before logging in");
+        setLoading(false);
+        return;
+      }
+
       const { userData } = await getUserDataByEmail(user.email);
       if (userData?.userid) {
         router.push(`/profile/${userData.userid}`);

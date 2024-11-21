@@ -64,7 +64,6 @@ export default function Signup() {
     e.preventDefault();
     setError("");
 
-    // Validate all fields are filled
     if (
       !formData.displayName ||
       !formData.email ||
@@ -75,19 +74,19 @@ export default function Signup() {
       return;
     }
 
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    // Validate password requirements
     if (!validatePassword(formData.password)) {
       setError(
         "Password must be at least 6 characters long and contain numbers, special characters, uppercase and lowercase letters"
       );
       return;
     }
+
+    setLoading(true);
 
     const {
       user,
@@ -102,7 +101,13 @@ export default function Signup() {
     }
 
     if (user && userid) {
-      router.push(`/profile/${userid}`);
+      // Add a success message about email verification
+      setError(
+        "Please check your email to verify your account before continuing."
+      );
+      setTimeout(() => {
+        router.push(`/profile/${userid}`);
+      }, 3000); // Give user time to read the message
     }
     setLoading(false);
   };

@@ -1,14 +1,27 @@
-// src/app/components/EmailVerificationNotice.js
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { resendVerificationEmail } from "../firebase/auth";
+import { useAuth } from "../context/AuthContext";
 
-export default function EmailVerificationNotice({ user }) {
+export default function EmailVerificationNotice() {
   const [resendLoading, setResendLoading] = useState(false);
   const [resendStatus, setResendStatus] = useState("");
+  const [showNotice, setShowNotice] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    // Check if we should show the notice
+    if (user && !user.emailVerified) {
+      setShowNotice(true);
+    } else {
+      setShowNotice(false);
+    }
+  }, [user]);
 
   const handleResendEmail = async () => {
+    if (!user) return;
+
     setResendLoading(true);
     setResendStatus("");
 
@@ -23,10 +36,10 @@ export default function EmailVerificationNotice({ user }) {
     setResendLoading(false);
   };
 
-  if (!user || user.emailVerified) return null;
+  if (!showNotice) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200">
+    <div className="fixed bottom-4 left-4 max-w-sm bg-yellow-50 p-4 rounded-lg shadow-lg border border-yellow-200">
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <svg
