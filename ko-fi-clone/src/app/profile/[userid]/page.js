@@ -22,6 +22,7 @@ import { getUserData } from "../../firebase/store";
 import { useAuth } from "../../context/AuthContext";
 import Link from "next/link";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
+import BeerLoading from "@/app/components/BeerLoading";
 
 export default function ProfilePage() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -52,7 +53,7 @@ export default function ProfilePage() {
   }, [params.userid, user]);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <BeerLoading />;
   }
 
   return (
