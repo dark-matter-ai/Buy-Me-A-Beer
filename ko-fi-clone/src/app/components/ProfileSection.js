@@ -29,17 +29,17 @@ export default function ProfileSection() {
             Buy me a Beer
           </h1>
           <p className="text-xl text-gray-700 mb-6">
-            Join 1M+ creators getting donations, memberships, and sales from
-            fans!
+            Join creators in getting donations, memberships, and sales from fans
+            and your admirers!
           </p>
           <Link
             href={profileLink}
-            className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-lg font-semibold py-3 px-8 rounded-lg"
+            className="inline-block bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-lg font-semibold py-3 px-8 rounded-lg hover:scale-95 active:scale-90 duration-300 hover:text-gray-900"
           >
             Get Started
           </Link>
           <p className="text-lg text-gray-600 mt-6">
-            $11M earned last month - It's free
+            Start Creating and Donating beers using Solana Blinks - It's free
           </p>
         </div>
         {/* Image Section */}

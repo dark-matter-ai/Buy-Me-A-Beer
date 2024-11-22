@@ -32,8 +32,9 @@ export const createUserDocument = async (email, displayName) => {
       email,
       createdAt: new Date().toISOString(),
       bannerImage:
-        "https://images.unsplash.com/photo-1668613966303-1a993a22e93f",
-      profileImage: "https://ryuzen6.github.io/assets/img/profile-img.jpg",
+        "https://www.indianshelf.in/views/themes/template-2022/assets/images/banner.jpg",
+      profileImage:
+        "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
       superPower: "New Creator",
       about: `${displayName} is a new creator. Welcome to their page!`,
       portfolioUrl: "",

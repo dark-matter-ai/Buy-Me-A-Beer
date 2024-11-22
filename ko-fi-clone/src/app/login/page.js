@@ -187,7 +187,7 @@ export default function Login() {
             </button>
           </div>
           <div className="text-center mt-6 text-sm">
-            New to Ko-Fi?{" "}
+            New here?{" "}
             <a href="/signup" className="text-blue-500 hover:underline">
               Sign up here
             </a>
