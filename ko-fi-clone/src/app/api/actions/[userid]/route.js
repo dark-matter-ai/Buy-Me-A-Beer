@@ -7,22 +7,38 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
+import { sendDonationEmail } from "@/app/utils/emailService";
+import { getUserData } from "@/app/firebase/store";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore"; // Added missing imports
+import { db } from "@/app/firebase/config";
 
-export const GET = async (req) => {
+export const GET = async (req, { params }) => {
+  const { userid } = params; // Removed unnecessary await
+
+  const { userData, error } = await getUserData(userid);
+
+  if (!userData || error) {
+    return Response.json(
+      { error: "User data not found" },
+      {
+        status: 400,
+        headers: ACTIONS_CORS_HEADERS,
+      }
+    );
+  }
+
   const payload = {
-    icon: new URL(
+    icon:
+      userData.profileImage ||
       "https://ryuzen6.github.io/assets/img/profile-img.jpg",
-      new URL(req.url).origin
-    ).toString(),
-    label: "Buy me a coffee",
-    description:
-      "Buy me a coffee with SOL using this super sweet blink of mine :)",
-    title: "Nick Frostbutter - Buy Me a Coffee",
+    label: `Buy ${userData.name} a beer`,
+    description: `Buy ${userData.name} a beer with SOL using this power of blinks`,
+    title: `${userData.name} - Buy Me A Beer`,
     links: {
       actions: [
         {
           label: "Send Beer",
-          href: `/api/actions/donate?name={name}&message={message}&amount={amount}&customAmount={CustomAmount}`,
+          href: `/api/actions/${userid}?name={name}&message={message}&amount={amount}&customAmount={CustomAmount}`,
           parameters: [
             {
               type: "text",
@@ -67,37 +83,41 @@ export const GET = async (req) => {
 
 export const OPTIONS = GET;
 
-export const POST = async (req) => {
+export const POST = async (req, { params }) => {
   try {
-    const url = new URL(req.url);
+    const { userid } = params;
 
+    const { userData, error } = await getUserData(userid);
+
+    if (!userData || error) {
+      throw new Error("User data not found");
+    }
+
+    const url = new URL(req.url);
     const name = url.searchParams.get("name");
     const message = url.searchParams.get("message");
-    const urlAmount = url.searchParams.get("amount");
-    const customAmount = url.searchParams.get("customAmount");
-    console.log("Name:", name);
-    console.log("Message:", message);
-    console.log("Amount:", urlAmount);
-    console.log("Custom Amount:", customAmount);
-    const amount = urlAmount ? urlAmount : customAmount;
+    const amount =
+      url.searchParams.get("amount") || url.searchParams.get("customAmount");
+
+    if (!amount) {
+      throw new Error("Amount is required");
+    }
 
     const body = await req.json();
     let account;
     try {
       account = new PublicKey(body.account);
     } catch (err) {
-      throw "Invalid 'account' provided. Its not a real pubkey";
+      throw new Error("Invalid 'account' provided. It's not a real pubkey");
     }
 
     const connection = new Connection(clusterApiUrl("devnet"));
-    const TO_PUBKEY = new PublicKey(
-      "CdgrRt3cvWok5t1ewt4VGFvwYxhRvbbz4frh9bskiEds"
-    );
+    const TO_PUBKEY = new PublicKey(userData.walletAddress);
 
     const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: account,
-        lamports: amount * LAMPORTS_PER_SOL,
+        lamports: parseFloat(amount) * LAMPORTS_PER_SOL,
         toPubkey: TO_PUBKEY,
       })
     );
@@ -107,9 +127,26 @@ export const POST = async (req) => {
       await connection.getLatestBlockhash()
     ).blockhash;
 
+    // Send email
+    if (userData.email) {
+      await sendDonationEmail(userData.email, amount, name, message);
+    }
+
+    // Update Firestore with new supporter
+    if (userid) {
+      const userRef = doc(db, "users", userid);
+      await updateDoc(userRef, {
+        supporters: arrayUnion({
+          name,
+          beers: parseFloat(amount).toFixed(2),
+          timestamp: new Date().toISOString(),
+        }),
+      });
+    }
+
     const thankYouMessage = name
-      ? `Thanks for the coffee, ${name}!`
-      : "Thanks for the coffee!";
+      ? `Thanks for the beer, ${name}!`
+      : "Thanks for the beer!";
 
     const payload = await createPostResponse({
       fields: {
@@ -122,13 +159,13 @@ export const POST = async (req) => {
       headers: ACTIONS_CORS_HEADERS,
     });
   } catch (err) {
-    let message = "An unknown error occurred";
-    if (typeof err == "string") message = err;
+    console.error("Error in POST:", err);
+    const message =
+      err instanceof Error ? err.message : "An unknown error occurred";
     return Response.json(
+      { message },
       {
-        message,
-      },
-      {
+        status: 400,
         headers: ACTIONS_CORS_HEADERS,
       }
     );

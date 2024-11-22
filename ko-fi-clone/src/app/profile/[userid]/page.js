@@ -20,9 +20,28 @@ import CreatePostModal from "../../components/CreatePostModal";
 import Header from "../../components/Header";
 import { getUserData } from "../../firebase/store";
 import { useAuth } from "../../context/AuthContext";
-import Link from "next/link";
 import EmailVerificationNotice from "../../components/EmailVerificationNotice";
 import BeerLoading from "@/app/components/BeerLoading";
+import SimpleTooltip from "../../components/SimpleTooltip";
+
+const getRelativeTime = (timestamp) => {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffInSeconds = Math.floor((now - past) / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+
+  if (diffInDays > 0) {
+    return `${diffInDays} ${diffInDays === 1 ? "day" : "days"} ago`;
+  } else if (diffInHours > 0) {
+    return `${diffInHours} ${diffInHours === 1 ? "hour" : "hours"} ago`;
+  } else if (diffInMinutes > 0) {
+    return `${diffInMinutes} ${diffInMinutes === 1 ? "minute" : "minutes"} ago`;
+  } else {
+    return "just now";
+  }
+};
 
 export default function ProfilePage() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -33,6 +52,27 @@ export default function ProfilePage() {
   const { user } = useAuth();
   const params = useParams();
 
+  const getTooltipMessage = () => {
+    if (!userData.walletAddress) {
+      if (isCurrentUser) {
+        return "Setup wallet address in Edit profile";
+      }
+      return "This user does not have a wallet address";
+    }
+    return "";
+  };
+
+  const handleSupportClick = async () => {
+    if (!userData.walletAddress) {
+      return;
+    }
+
+    window.open(
+      `https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2F${params.userid}&cluster=devnet`,
+      "_blank"
+    );
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (params.userid) {
@@ -40,6 +80,18 @@ export default function ProfilePage() {
           params.userid
         );
         if (!error && fetchedData) {
+          // Sort posts by timestamp in descending order (most recent first)
+          if (fetchedData.posts) {
+            fetchedData.posts.sort(
+              (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+            );
+          }
+          // Sort supporters by timestamp in descending order (most recent first)
+          if (fetchedData.supporters) {
+            fetchedData.supporters.sort(
+              (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+            );
+          }
           setUserData(fetchedData);
           // Check if current authenticated user is viewing their own profile
           if (user && user.email === fetchedData.email) {
@@ -95,24 +147,27 @@ export default function ProfilePage() {
                 </div>
               </div>
               <div className="ml-auto flex items-center gap-3">
-                <button
-                  className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
-                  onClick={() =>
-                    window.open(
-                      "https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2Fdonate&cluster=devnet",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/931/931949.png"
-                    alt="Beer"
-                    width={20}
-                    height={20}
-                    className="filter brightness-0 invert"
-                  />
-                  <span>Support</span>
-                </button>
+                <SimpleTooltip content={getTooltipMessage()}>
+                  <button
+                    onClick={() => {
+                      handleSupportClick();
+                    }}
+                    className={`px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2 ${
+                      !userData.walletAddress
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/931/931949.png"
+                      alt="Beer"
+                      width={20}
+                      height={20}
+                      className="filter brightness-0 invert"
+                    />
+                    <span>Support</span>
+                  </button>
+                </SimpleTooltip>
 
                 {isCurrentUser && (
                   <Menu as="div" className="relative">
@@ -255,7 +310,7 @@ export default function ProfilePage() {
                           <div>
                             <p className="font-semibold">{userData.name}</p>
                             <p className="text-gray-500 text-sm">
-                              {new Date(post.timestamp).toLocaleDateString()}
+                              {getRelativeTime(post.timestamp)}
                             </p>
                           </div>
                         </div>
@@ -279,10 +334,10 @@ export default function ProfilePage() {
                       <p key={index} className="text-gray-600">
                         {supporter.name} donated{" "}
                         <span className="font-semibold bg-gradient-to-r from-yellow-500 to-orange-500 text-transparent bg-clip-text">
-                          {supporter.amount} beers
+                          {supporter.beers / 0.01} beers
                         </span>{" "}
                         <span className="text-gray-400">
-                          • {supporter.timeAgo}
+                          • {getRelativeTime(supporter.timestamp)}
                         </span>
                       </p>
                     ))}

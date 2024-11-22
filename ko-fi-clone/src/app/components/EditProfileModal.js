@@ -17,6 +17,7 @@ export default function EditProfileModal({
     superPower: "",
     about: "",
     portfolioUrl: "",
+    walletAddress: "",
     socialMedia: {
       instagram: "",
       twitter: "",
@@ -39,6 +40,7 @@ export default function EditProfileModal({
         superPower: userData.superPower || "",
         about: userData.about || "",
         portfolioUrl: userData.portfolioUrl || "",
+        walletAddress: userData.walletAddress || "",
         socialMedia: {
           instagram: userData.socialMedia?.instagram || "",
           twitter: userData.socialMedia?.twitter || "",
@@ -89,6 +91,7 @@ export default function EditProfileModal({
         superPower: formData.superPower,
         about: formData.about,
         portfolioUrl: formData.portfolioUrl,
+        walletAddress: formData.walletAddress,
         socialMedia: formData.socialMedia,
         categories: categoriesArray,
         updatedAt: new Date().toISOString(),
@@ -126,6 +129,21 @@ export default function EditProfileModal({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Required Fields */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Wallet Address *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.walletAddress}
+              onChange={(e) =>
+                setFormData({ ...formData, walletAddress: e.target.value })
+              }
+              className="w-full rounded-lg border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your Solana wallet address"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Banner Image URL *
