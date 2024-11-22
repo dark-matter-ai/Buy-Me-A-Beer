@@ -101,10 +101,6 @@ export default function Signup() {
     }
 
     if (user && userid) {
-      // Add a success message about email verification
-      setError(
-        "Please check your email to verify your account before continuing."
-      );
       setTimeout(() => {
         router.push(`/profile/${userid}`);
       }, 3000); // Give user time to read the message
