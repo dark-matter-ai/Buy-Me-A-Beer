@@ -1,4 +1,3 @@
-// src/app/profile/[userid]/page.js
 "use client";
 
 import { useState, useEffect } from "react";
@@ -33,11 +32,11 @@ const getRelativeTime = (timestamp) => {
   const diffInDays = Math.floor(diffInHours / 24);
 
   if (diffInDays > 0) {
-    return `${diffInDays} ${diffInDays === 1 ? "day" : "days"} ago`;
+    return `${diffInDays}d ago`;
   } else if (diffInHours > 0) {
-    return `${diffInHours} ${diffInHours === 1 ? "hour" : "hours"} ago`;
+    return `${diffInHours}h ago`;
   } else if (diffInMinutes > 0) {
-    return `${diffInMinutes} ${diffInMinutes === 1 ? "minute" : "minutes"} ago`;
+    return `${diffInMinutes}mins ago`;
   } else {
     return "just now";
   }
@@ -66,7 +65,6 @@ export default function ProfilePage() {
     if (!userData.walletAddress) {
       return;
     }
-
     window.open(
       `https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2F${params.userid}&cluster=devnet`,
       "_blank"
@@ -80,20 +78,17 @@ export default function ProfilePage() {
           params.userid
         );
         if (!error && fetchedData) {
-          // Sort posts by timestamp in descending order (most recent first)
           if (fetchedData.posts) {
             fetchedData.posts.sort(
               (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
             );
           }
-          // Sort supporters by timestamp in descending order (most recent first)
           if (fetchedData.supporters) {
             fetchedData.supporters.sort(
               (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
             );
           }
           setUserData(fetchedData);
-          // Check if current authenticated user is viewing their own profile
           if (user && user.email === fetchedData.email) {
             setIsCurrentUser(true);
           }
@@ -120,7 +115,7 @@ export default function ProfilePage() {
               <img
                 src={
                   userData.bannerImage ||
-                  "https://images.unsplash.com/photo-1668613966303-1a993a22e93f"
+                  "https://www.indianshelf.in/views/themes/template-2022/assets/images/banner.jpg"
                 }
                 alt="Banner"
                 className="w-full h-full object-cover"
@@ -135,7 +130,7 @@ export default function ProfilePage() {
                   className="w-32 h-32 rounded-full border-4 border-white shadow-xl"
                   src={
                     userData.profileImage ||
-                    "https://ryuzen6.github.io/assets/img/profile-img.jpg"
+                    "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
                   }
                   alt="profile"
                 />
@@ -149,9 +144,7 @@ export default function ProfilePage() {
               <div className="ml-auto flex items-center gap-3">
                 <SimpleTooltip content={getTooltipMessage()}>
                   <button
-                    onClick={() => {
-                      handleSupportClick();
-                    }}
+                    onClick={handleSupportClick}
                     className={`px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2 ${
                       !userData.walletAddress
                         ? "opacity-50 cursor-not-allowed"
@@ -208,145 +201,152 @@ export default function ProfilePage() {
 
           {/* Content Section */}
           <div className="mt-8 p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* About Section */}
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
-                <h3 className="text-2xl font-bold mb-4">About</h3>
-                <p className="text-gray-600 mb-6">{userData.about}</p>
+            <div className="grid grid-cols-12 gap-8">
+              {/* Left Column - About and Supporters */}
+              <div className="col-span-12 md:col-span-4 space-y-8">
+                {/* About Section */}
+                <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
+                  <h3 className="text-2xl font-bold mb-4">About</h3>
+                  <p className="text-gray-600 mb-6">{userData.about}</p>
 
-                {userData.portfolioUrl && (
-                  <a
-                    href={userData.portfolioUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6"
-                  >
-                    <LinkIcon className="w-4 h-4" />
-                    {new URL(userData.portfolioUrl).hostname}
-                  </a>
-                )}
+                  {userData.portfolioUrl && (
+                    <a
+                      href={userData.portfolioUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6"
+                    >
+                      <LinkIcon className="w-4 h-4" />
+                      {new URL(userData.portfolioUrl).hostname}
+                    </a>
+                  )}
 
-                {/* Social Media Icons */}
-                {Object.values(userData.socialMedia || {}).some(
-                  (url) => url
-                ) && (
-                  <div className="flex gap-4 mb-6">
-                    {userData.socialMedia?.instagram && (
-                      <a
-                        href={userData.socialMedia.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Instagram className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                      </a>
-                    )}
-                    {userData.socialMedia?.twitter && (
-                      <a
-                        href={userData.socialMedia.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Twitter className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                      </a>
-                    )}
-                    {userData.socialMedia?.youtube && (
-                      <a
-                        href={userData.socialMedia.youtube}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Youtube className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                      </a>
-                    )}
-                    {userData.socialMedia?.twitch && (
-                      <a
-                        href={userData.socialMedia.twitch}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Twitch className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                      </a>
-                    )}
-                    {userData.socialMedia?.music && (
-                      <a
-                        href={userData.socialMedia.music}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Music2 className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
-                      </a>
-                    )}
-                  </div>
-                )}
+                  {/* Social Media Icons */}
+                  {Object.values(userData.socialMedia || {}).some(
+                    (url) => url
+                  ) && (
+                    <div className="flex gap-4 mb-6">
+                      {userData.socialMedia?.instagram && (
+                        <a
+                          href={userData.socialMedia.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Instagram className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </a>
+                      )}
+                      {userData.socialMedia?.twitter && (
+                        <a
+                          href={userData.socialMedia.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Twitter className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </a>
+                      )}
+                      {userData.socialMedia?.youtube && (
+                        <a
+                          href={userData.socialMedia.youtube}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Youtube className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </a>
+                      )}
+                      {userData.socialMedia?.twitch && (
+                        <a
+                          href={userData.socialMedia.twitch}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Twitch className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </a>
+                      )}
+                      {userData.socialMedia?.music && (
+                        <a
+                          href={userData.socialMedia.music}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Music2 className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </a>
+                      )}
+                    </div>
+                  )}
 
-                {/* Categories */}
-                {userData.categories && userData.categories.length > 0 && (
-                  <div className="flex gap-2 flex-wrap">
-                    {userData.categories.map((category, index) => (
-                      <span
-                        key={index}
-                        className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-700"
-                      >
-                        {category}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                  {/* Categories */}
+                  {userData.categories && userData.categories.length > 0 && (
+                    <div className="flex gap-2 flex-wrap">
+                      {userData.categories.map((category, index) => (
+                        <span
+                          key={index}
+                          className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-700"
+                        >
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Recent Supporters */}
+                <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
+                  <h3 className="text-2xl font-bold mb-6">Recent Supporters</h3>
+                  {userData.supporters && userData.supporters.length > 0 ? (
+                    <div className="space-y-4">
+                      {userData.supporters.map((supporter, index) => (
+                        <p key={index} className="text-gray-600">
+                          {supporter.name} donated{" "}
+                          <span className="font-semibold bg-gradient-to-r from-yellow-500 to-orange-500 text-transparent bg-clip-text">
+                            {supporter.beers / 0.01} beers
+                          </span>{" "}
+                          <span className="text-gray-400">
+                            • {getRelativeTime(supporter.timestamp)}
+                          </span>
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-center py-8">
+                      No supporters yet
+                    </p>
+                  )}
+                </div>
               </div>
 
-              {/* Recent Posts */}
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
-                <h3 className="text-2xl font-bold mb-6">Recent Posts</h3>
-                {userData.posts && userData.posts.length > 0 ? (
-                  <div className="space-y-6">
-                    {userData.posts.map((post, index) => (
-                      <div key={index} className="space-y-4">
-                        <div className="flex items-center gap-4">
-                          <img
-                            src={userData.profileImage}
-                            alt="profile pic"
-                            className="w-12 h-12 rounded-full"
-                          />
-                          <div>
-                            <p className="font-semibold">{userData.name}</p>
-                            <p className="text-gray-500 text-sm">
-                              {getRelativeTime(post.timestamp)}
-                            </p>
+              {/* Right Column - Posts */}
+              <div className="col-span-12 md:col-span-8">
+                <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
+                  <h3 className="text-2xl font-bold mb-6">Recent Posts</h3>
+                  {userData.posts && userData.posts.length > 0 ? (
+                    <div className="space-y-6">
+                      {userData.posts.map((post, index) => (
+                        <div key={index} className="space-y-4">
+                          <div className="flex items-center gap-4">
+                            <img
+                              src={userData.profileImage}
+                              alt="profile pic"
+                              className="w-12 h-12 rounded-full"
+                            />
+                            <div>
+                              <p className="font-semibold">{userData.name}</p>
+                              <p className="text-gray-500 text-sm">
+                                {getRelativeTime(post.timestamp)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="p-4 rounded-2xl bg-white shadow-sm">
+                            {post.content}
                           </div>
                         </div>
-                        <div className="p-4 rounded-2xl bg-white shadow-sm">
-                          {post.content}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 text-center py-8">No posts yet</p>
-                )}
-              </div>
-
-              {/* Recent Supporters */}
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-white">
-                <h3 className="text-2xl font-bold mb-6">Recent Supporters</h3>
-                {userData.supporters && userData.supporters.length > 0 ? (
-                  <div className="space-y-4">
-                    {userData.supporters.map((supporter, index) => (
-                      <p key={index} className="text-gray-600">
-                        {supporter.name} donated{" "}
-                        <span className="font-semibold bg-gradient-to-r from-yellow-500 to-orange-500 text-transparent bg-clip-text">
-                          {supporter.beers / 0.01} beers
-                        </span>{" "}
-                        <span className="text-gray-400">
-                          • {getRelativeTime(supporter.timestamp)}
-                        </span>
-                      </p>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 text-center py-8">
-                    No supporters yet
-                  </p>
-                )}
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-center py-8">
+                      No posts yet
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
