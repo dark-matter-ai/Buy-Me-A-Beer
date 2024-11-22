@@ -66,7 +66,7 @@ export default function ProfilePage() {
       return;
     }
     window.open(
-      `https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2F${params.userid}&cluster=devnet`,
+      `https://dial.to/?action=solana-action%3Ahttps%3A%2F%2Fbuy-me-a-beer-pi.vercel.app%2Fapi%2Factions%2F${params.userid}&cluster=devnet`,
       "_blank"
     );
   };
