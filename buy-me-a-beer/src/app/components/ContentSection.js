@@ -5,7 +5,7 @@ import { Play, X } from "lucide-react";
 
 export default function HowItWorksSection() {
   const [isOpen, setIsOpen] = useState(false);
-  const videoId = "cjXjHxIsH3g";
+  const videoId = "sBc30HQbWms";
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function HowItWorksSection() {
             />
             <button
               onClick={() => setIsOpen(true)}
-              className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors duration-300 rounded-2xl"
+              className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors duration-300 rounded-2xl"
               aria-label="Play video"
             >
               <Play className="w-16 h-16 text-white" />
@@ -102,7 +102,7 @@ export default function HowItWorksSection() {
             </button>
             <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-2xl">
               <iframe
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                src={`https://www.youtube.com/embed/sBc30HQbWms?si=H4T3hRmXz6NzMtjE`}
                 title="How It Works Video"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
