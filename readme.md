@@ -23,7 +23,7 @@ A **Next.js-powered content creation and donation platform** that enables users 
 ## 🌟 How It Works  
 1. Creators share content on the platform.  
 2. Supporters can donate Solana tokens as a gesture of appreciation.  
-3. Experience a seamless, decentralized transaction flow.  
+3. Experience a seamless, decentralized transaction process.  
 
 ---
 
