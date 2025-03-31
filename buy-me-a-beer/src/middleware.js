@@ -8,7 +8,7 @@ export function middleware(request) {
 
   if (isAuthPage && token) {
     // Instead of redirecting to /profile, let the client-side handle the redirect
-    // since we need to fetch the userid from Firebase
+    // since we need to fetch the userid from Firebase/Firestore
     return NextResponse.redirect(new URL("/", request.url));
   }
 
